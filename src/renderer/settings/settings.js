@@ -44,10 +44,13 @@ function bindEvents() {
   document.getElementById('file-input').addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file || !pendingUploadKey) return;
-    await window.settingsAPI.uploadAsset(pendingUploadKey, file.path);
-    await refreshAsset(pendingUploadKey);
-    e.target.value = '';
+
+    const key = pendingUploadKey;
     pendingUploadKey = null;
+    e.target.value = '';
+
+    const area = document.getElementById(`upload-${key}`);
+    if (area) await uploadWithProgress(key, area, file.path);
   });
 
   document.getElementById('hook-btn').addEventListener('click', async () => {
@@ -110,6 +113,38 @@ async function refreshAsset(key) {
     area.textContent = key === 'sound' ? '+ 上传 MP3 / WAV' : '+ 上传';
     if (key === 'main') area.textContent = '+ 上传图片 / GIF / 视频';
   }
+}
+
+async function uploadWithProgress(key, area, filePath) {
+  let pct = 0;
+  renderProgress(area, pct);
+  const timer = setInterval(() => {
+    pct = Math.min(90, pct + 15);
+    renderProgress(area, pct);
+  }, 80);
+
+  try {
+    await window.settingsAPI.uploadAsset(key, filePath);
+    clearInterval(timer);
+    renderProgress(area, 100);
+    await new Promise(r => setTimeout(r, 350));
+    await refreshAsset(key);
+  } catch (err) {
+    clearInterval(timer);
+    area.className = 'upload-area upload-error';
+    area.textContent = '上传失败，请重试';
+    console.error('Upload failed:', err);
+  }
+}
+
+function renderProgress(area, pct) {
+  area.className = 'upload-area uploading';
+  area.innerHTML = `
+    <div class="upload-progress-bar">
+      <div class="upload-progress-fill" style="width:${pct}%"></div>
+    </div>
+    <span>${pct}%</span>
+  `;
 }
 
 init();

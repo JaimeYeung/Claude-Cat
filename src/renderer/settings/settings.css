@@ -91,3 +91,31 @@ body {
 .reminder-row { display: flex; align-items: center; gap: 8px; }
 .reminder-row input[type="number"] { width: 60px; text-align: center; }
 input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+.upload-area.uploading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #666;
+  border-color: #bbb;
+  cursor: default;
+}
+.upload-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #eee;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.upload-progress-fill {
+  height: 100%;
+  background: #2d7d2d;
+  border-radius: 2px;
+  transition: width 0.08s linear;
+}
+.upload-area.upload-error {
+  border: 1.5px solid #ff3b30;
+  background: #fff5f5;
+  color: #cc0000;
+  cursor: pointer;
+}
