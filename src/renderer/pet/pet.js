@@ -108,6 +108,9 @@ function triggerAlert() {
 
 (async () => {
   await loadConfig();
+  const initSize = config.catSize || 120;
+  catWrap.style.width = initSize + 'px';
+  catWrap.style.height = initSize + 'px';
   await enterMain();
 
   window.catAPI.onAlert(() => {
@@ -123,6 +126,11 @@ function triggerAlert() {
 
   window.catAPI.onReload(() => {
     if (currentState <= STATE.MAIN) enterMain();
+  });
+
+  window.catAPI.onResize((size) => {
+    catWrap.style.width = size + 'px';
+    catWrap.style.height = size + 'px';
   });
 })();
 

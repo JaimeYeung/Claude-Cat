@@ -11,6 +11,7 @@ const DEFAULTS = {
   lastBreakReminder: null,
   petX: 100,
   petY: 100,
+  catSize: 120,
 };
 
 class Config {

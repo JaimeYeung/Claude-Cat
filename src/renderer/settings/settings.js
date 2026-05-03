@@ -7,6 +7,9 @@ async function init() {
   document.getElementById('userName').value = config.userName || '';
   document.getElementById('breakEnabled').checked = config.breakEnabled;
   document.getElementById('breakInterval').value = config.breakInterval;
+  const sz = config.catSize || 120;
+  document.getElementById('catSize').value = sz;
+  document.getElementById('catSizeLabel').textContent = sz + 'px';
 
   await refreshHookStatus();
   await refreshAllAssets();
@@ -21,6 +24,12 @@ function bindEvents() {
     btn.textContent = '已保存 ✓';
     btn.disabled = true;
     setTimeout(() => { btn.textContent = '保存'; btn.disabled = false; }, 1500);
+  });
+
+  document.getElementById('catSize').addEventListener('input', async (e) => {
+    const size = parseInt(e.target.value, 10);
+    document.getElementById('catSizeLabel').textContent = size + 'px';
+    await window.settingsAPI.resizePet(size);
   });
 
   document.getElementById('breakEnabled').addEventListener('change', (e) => {

@@ -48,9 +48,11 @@ async function bootstrap() {
 }
 
 function createPetWindow() {
+  const catSize = config.get('catSize') || 120;
+  const winSize = catSize + 80;
   const win = new BrowserWindow({
-    width: 200,
-    height: 200,
+    width: winSize,
+    height: winSize,
     x: config.get('petX'),
     y: config.get('petY'),
     transparent: true,
@@ -112,6 +114,15 @@ function registerIPC() {
   ipcMain.handle('hook:uninstall', () => {
     hookManager.uninstall();
     config.set('hookInstalled', false);
+  });
+
+  ipcMain.handle('pet:resize', (_, catSize) => {
+    config.set('catSize', catSize);
+    if (petWindow && !petWindow.isDestroyed()) {
+      const winSize = catSize + 80;
+      petWindow.setSize(winSize, winSize);
+      petWindow.webContents.send('cat:resize', catSize);
+    }
   });
 
   ipcMain.handle('dialog:open-file', (_, filters) => {
