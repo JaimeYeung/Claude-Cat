@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld('catAPI', {
   onReminder: (cb) => ipcRenderer.on('cat:reminder', cb),
   onReload: (cb) => ipcRenderer.on('cat:reload', cb),
   onResize: (cb) => ipcRenderer.on('cat:resize', (_, size) => cb(size)),
+  onLanguage: (cb) => ipcRenderer.on('cat:language', (_, lang) => cb(lang)),
   setIgnoreMouseEvents: (ignore) =>
     ipcRenderer.send('set-ignore-mouse', ignore),
   getConfig: () => ipcRenderer.invoke('config:get-all'),

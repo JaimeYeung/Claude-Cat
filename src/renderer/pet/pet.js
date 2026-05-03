@@ -106,11 +106,18 @@ function triggerAlert() {
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
+function applyPetLanguage(lang) {
+  document.querySelectorAll('#interaction-btns button').forEach(btn => {
+    btn.textContent = btn.dataset[lang] || btn.textContent;
+  });
+}
+
 (async () => {
   await loadConfig();
   const initSize = config.catSize || 120;
   catWrap.style.width = initSize + 'px';
   catWrap.style.height = initSize + 'px';
+  applyPetLanguage(config.language || 'zh');
   await enterMain();
 
   window.catAPI.onAlert(() => {
@@ -132,6 +139,8 @@ function triggerAlert() {
     catWrap.style.width = size + 'px';
     catWrap.style.height = size + 'px';
   });
+
+  window.catAPI.onLanguage((lang) => applyPetLanguage(lang));
 })();
 
 async function playAlertSound() {

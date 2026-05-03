@@ -93,7 +93,12 @@ function registerIPC() {
     return { x: 0, y: 0 };
   });
 
-  ipcMain.on('config:set', (_, key, value) => config.set(key, value));
+  ipcMain.on('config:set', (_, key, value) => {
+    config.set(key, value);
+    if (key === 'language' && petWindow && !petWindow.isDestroyed()) {
+      petWindow.webContents.send('cat:language', value);
+    }
+  });
   ipcMain.handle('config:get-all', () => config.getAll());
 
   ipcMain.handle('assets:upload', (_, key, filePath) => {

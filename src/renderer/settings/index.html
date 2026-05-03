@@ -8,36 +8,42 @@
 <body>
   <div class="panel">
     <div class="panel-title">
-      <span>🐱 猫猫设置</span>
-      <button id="save-btn" class="save-btn">保存</button>
+      <span data-i18n="title">🐱 猫猫设置</span>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="lang-toggle">
+          <button id="lang-zh" class="lang-btn active">中</button>
+          <button id="lang-en" class="lang-btn">EN</button>
+        </div>
+        <button id="save-btn" class="save-btn" data-i18n="save">保存</button>
+      </div>
     </div>
 
     <!-- 称呼 -->
     <div class="section">
-      <div class="section-label">称呼</div>
+      <div class="section-label" data-i18n="sec_nickname">称呼</div>
       <div class="field">
-        <label>我该叫猫猫</label>
-        <input type="text" id="catName" placeholder="猫猫">
+        <label data-i18n="catName_label">我该叫猫猫</label>
+        <input type="text" id="catName" data-i18n-ph="catName_ph" placeholder="猫猫">
       </div>
       <div class="field">
-        <label>猫猫怎么叫我</label>
-        <input type="text" id="userName" placeholder="主人">
+        <label data-i18n="userName_label">猫猫怎么叫我</label>
+        <input type="text" id="userName" data-i18n-ph="userName_ph" placeholder="主人">
       </div>
       <div class="field">
-        <label>提醒消息</label>
-        <input type="text" id="alertMessage" placeholder="Claude 需要你了喵~">
+        <label data-i18n="alertMsg_label">提醒消息</label>
+        <input type="text" id="alertMessage" data-i18n-ph="alertMsg_ph" placeholder="Claude 需要你了喵~">
       </div>
       <div class="field">
-        <label>休息消息</label>
-        <input type="text" id="reminderMessage" placeholder="休息一下喝点水~">
+        <label data-i18n="reminderMsg_label">休息消息</label>
+        <input type="text" id="reminderMessage" data-i18n-ph="reminderMsg_ph" placeholder="休息一下喝点水~">
       </div>
     </div>
 
     <!-- 外观 -->
     <div class="section">
-      <div class="section-label">外观</div>
+      <div class="section-label" data-i18n="sec_appearance">外观</div>
       <div class="field">
-        <label>猫猫大小</label>
+        <label data-i18n="catSize_label">猫猫大小</label>
         <input type="range" id="catSize" min="80" max="240" step="10">
         <span id="catSizeLabel" style="width:42px;text-align:right;color:#666">120px</span>
       </div>
@@ -45,34 +51,34 @@
 
     <!-- 素材管理 -->
     <div class="section">
-      <div class="section-label">素材管理</div>
+      <div class="section-label" data-i18n="sec_assets">素材管理</div>
 
       <div class="row">
-        <span class="row-label">主动画</span>
-        <span class="badge badge-required">必填</span>
+        <span class="row-label" data-i18n="main_label">主动画</span>
+        <span class="badge badge-required" data-i18n="badge_required">必填</span>
       </div>
       <div id="upload-main" class="upload-area" data-key="main" style="margin-bottom:12px">
         + 上传图片 / GIF / 视频
       </div>
 
       <div class="row">
-        <span class="row-label">其他素材</span>
-        <span class="badge badge-optional">可选</span>
+        <span class="row-label" data-i18n="other_label">其他素材</span>
+        <span class="badge badge-optional" data-i18n="badge_optional">可选</span>
       </div>
       <div class="row">
-        <span class="row-label">玩耍动画</span>
+        <span class="row-label" data-i18n="play_label">玩耍动画</span>
         <div id="upload-interact.play" class="upload-area" data-key="interact.play" style="flex:1">+ 上传</div>
       </div>
       <div class="row">
-        <span class="row-label">喂食动画</span>
+        <span class="row-label" data-i18n="feed_label">喂食动画</span>
         <div id="upload-interact.feed" class="upload-area" data-key="interact.feed" style="flex:1">+ 上传</div>
       </div>
       <div class="row">
-        <span class="row-label">摸头动画</span>
+        <span class="row-label" data-i18n="pet_label">摸头动画</span>
         <div id="upload-interact.pet" class="upload-area" data-key="interact.pet" style="flex:1">+ 上传</div>
       </div>
       <div class="row">
-        <span class="row-label">叫声</span>
+        <span class="row-label" data-i18n="sound_label">叫声</span>
         <div id="upload-sound" class="upload-area" data-key="sound" style="flex:1">+ 上传 MP3 / WAV</div>
       </div>
     </div>
@@ -88,17 +94,17 @@
 
     <!-- 休息提醒 -->
     <div class="section">
-      <div class="section-label">休息提醒</div>
+      <div class="section-label" data-i18n="sec_break">休息提醒</div>
       <div class="field">
-        <label>开启提醒</label>
+        <label data-i18n="break_enabled">开启提醒</label>
         <input type="checkbox" id="breakEnabled">
       </div>
       <div class="field">
-        <label>提醒间隔</label>
+        <label data-i18n="break_interval">提醒间隔</label>
         <div class="reminder-row">
-          <span>每</span>
+          <span data-i18n="break_pre">每</span>
           <input type="number" id="breakInterval" min="1" max="480" value="45">
-          <span>分钟</span>
+          <span data-i18n="break_post">分钟</span>
         </div>
       </div>
     </div>
