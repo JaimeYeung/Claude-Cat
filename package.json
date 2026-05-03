@@ -1,0 +1,30 @@
+{
+  "name": "cat-gatekeeper",
+  "version": "1.0.0",
+  "description": "Desktop cat that watches Claude Code for you",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "jest",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^32.0.0",
+    "electron-builder": "^24.0.0",
+    "jest": "^29.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": ["**/tests/**/*.test.js"]
+  },
+  "build": {
+    "appId": "com.catgatekeeper.app",
+    "productName": "Cat Gatekeeper",
+    "directories": { "output": "dist" },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "files": ["src/**/*", "assets/**/*"]
+  }
+}
