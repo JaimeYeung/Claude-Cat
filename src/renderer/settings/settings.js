@@ -14,10 +14,13 @@ async function init() {
 }
 
 function bindEvents() {
-  ['catName', 'userName'].forEach(id => {
-    document.getElementById(id).addEventListener('blur', (e) => {
-      window.settingsAPI.setConfig(id, e.target.value);
-    });
+  document.getElementById('save-btn').addEventListener('click', () => {
+    window.settingsAPI.setConfig('catName', document.getElementById('catName').value);
+    window.settingsAPI.setConfig('userName', document.getElementById('userName').value);
+    const btn = document.getElementById('save-btn');
+    btn.textContent = '已保存 ✓';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = '保存'; btn.disabled = false; }, 1500);
   });
 
   document.getElementById('breakEnabled').addEventListener('change', (e) => {
@@ -30,27 +33,16 @@ function bindEvents() {
   });
 
   document.querySelectorAll('.upload-area').forEach(area => {
-    area.addEventListener('click', (e) => {
+    area.addEventListener('click', async (e) => {
       if (e.target.classList.contains('file-delete')) return;
-      pendingUploadKey = area.dataset.key;
-      const input = document.getElementById('file-input');
-      input.accept = area.dataset.key === 'sound'
-        ? '.mp3,.wav,audio/*'
-        : 'image/*,video/mp4,.gif';
-      input.click();
+      const key = area.dataset.key;
+      const filters = key === 'sound'
+        ? [{ name: 'Audio', extensions: ['mp3', 'wav'] }]
+        : [{ name: 'Media', extensions: ['png', 'gif', 'jpg', 'jpeg', 'mp4'] }];
+      const filePath = await window.settingsAPI.openFileDialog(filters);
+      if (!filePath) return;
+      await uploadWithProgress(key, area, filePath);
     });
-  });
-
-  document.getElementById('file-input').addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file || !pendingUploadKey) return;
-
-    const key = pendingUploadKey;
-    pendingUploadKey = null;
-    e.target.value = '';
-
-    const area = document.getElementById(`upload-${key}`);
-    if (area) await uploadWithProgress(key, area, file.path);
   });
 
   document.getElementById('hook-btn').addEventListener('click', async () => {

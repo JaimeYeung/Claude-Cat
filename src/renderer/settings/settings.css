@@ -21,6 +21,17 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+.save-btn {
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.save-btn:disabled { background: #888; cursor: default; }
 .section { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
 .section:last-child { border-bottom: none; }
 .section-label {

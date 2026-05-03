@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const Config = require('./config');
 const AssetManager = require('./assets');
@@ -106,6 +106,11 @@ function registerIPC() {
   ipcMain.handle('hook:uninstall', () => {
     hookManager.uninstall();
     config.set('hookInstalled', false);
+  });
+
+  ipcMain.handle('dialog:open-file', (_, filters) => {
+    return dialog.showOpenDialog({ properties: ['openFile'], filters })
+      .then(result => result.canceled ? null : result.filePaths[0]);
   });
 
   ipcMain.on('open-settings', () => {

@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   uploadAsset: (key, filePath) => ipcRenderer.invoke('assets:upload', key, filePath),
   deleteAsset: (key) => ipcRenderer.invoke('assets:delete', key),
   getAssetPath: (key) => ipcRenderer.invoke('assets:get', key),
+  openFileDialog: (filters) => ipcRenderer.invoke('dialog:open-file', filters),
   getHookStatus: () => ipcRenderer.invoke('hook:status'),
   installHook: () => ipcRenderer.invoke('hook:install'),
   uninstallHook: () => ipcRenderer.invoke('hook:uninstall'),
