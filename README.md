@@ -1,14 +1,14 @@
 # Claude Cat 🐱
 
-> A desktop cat that keeps you company while you work — and yells at you when Claude Code needs a click.
+> A desktop cat that keeps you company while you work — and jumps to get your attention when Claude Code needs a click.
 
 ---
 
-Remember QQ Pet? That little creature that lived on your screen, ate virtual food, and made your desktop feel less lonely?
+You miss having a pet around while you work. Something alive in the corner of your screen. A little presence that makes the day feel less like staring into a void.
 
-Claude Cat is that. But for 2025. And actually useful.
+Claude Cat is that. A small cat that lives on your desktop, does its thing, and keeps you company through the long hours.
 
-It sits in the corner of your screen all day. Sometimes it does a little animation. You almost forget it's there — until Claude Code gets stuck waiting for your input, and your cat **jumps off the screen to get your attention**.
+And when Claude Code gets stuck waiting for your input — instead of silently freezing for 30 minutes while you're in another tab — your cat **jumps up and yells at you**.
 
 No more coming back 30 minutes later to find Claude has been frozen on a permission prompt the whole time. Nothing written. Session wasted.
 
