@@ -3,6 +3,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('catAPI', {
   onAlert: (cb) => ipcRenderer.on('cat:alert', cb),
   onReminder: (cb) => ipcRenderer.on('cat:reminder', cb),
+  onReload: (cb) => ipcRenderer.on('cat:reload', cb),
   setIgnoreMouseEvents: (ignore) =>
     ipcRenderer.send('set-ignore-mouse', ignore),
   getConfig: () => ipcRenderer.invoke('config:get-all'),

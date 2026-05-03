@@ -20,9 +20,6 @@ function renderMedia(url, loop = true) {
   catDisplay.innerHTML = '';
 
   if (!url) {
-    const img = document.createElement('img');
-    img.src = '../../assets/placeholder.png';
-    catDisplay.appendChild(img);
     return;
   }
 
@@ -122,6 +119,10 @@ function triggerAlert() {
   window.catAPI.onReminder(() => {
     triggerAlert();
     showBubble('reminder', config.userName);
+  });
+
+  window.catAPI.onReload(() => {
+    if (currentState <= STATE.MAIN) enterMain();
   });
 })();
 

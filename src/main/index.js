@@ -94,7 +94,13 @@ function registerIPC() {
   ipcMain.on('config:set', (_, key, value) => config.set(key, value));
   ipcMain.handle('config:get-all', () => config.getAll());
 
-  ipcMain.handle('assets:upload', (_, key, filePath) => assets.save(key, filePath));
+  ipcMain.handle('assets:upload', (_, key, filePath) => {
+    const result = assets.save(key, filePath);
+    if (petWindow && !petWindow.isDestroyed()) {
+      petWindow.webContents.send('cat:reload');
+    }
+    return result;
+  });
   ipcMain.handle('assets:get', (_, key) => assets.getPath(key));
   ipcMain.handle('assets:delete', (_, key) => assets.delete(key));
 
