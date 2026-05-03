@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Cat Gatekeeper 设置</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="panel">
+    <div class="panel-title">
+      <span>🐱 猫猫设置</span>
+    </div>
+
+    <!-- 称呼 -->
+    <div class="section">
+      <div class="section-label">称呼</div>
+      <div class="field">
+        <label>我该叫猫猫</label>
+        <input type="text" id="catName" placeholder="猫猫">
+      </div>
+      <div class="field">
+        <label>猫猫怎么叫我</label>
+        <input type="text" id="userName" placeholder="主人">
+      </div>
+    </div>
+
+    <!-- 素材管理 -->
+    <div class="section">
+      <div class="section-label">素材管理</div>
+
+      <div class="row">
+        <span class="row-label">主动画</span>
+        <span class="badge badge-required">必填</span>
+      </div>
+      <div id="upload-main" class="upload-area" data-key="main" style="margin-bottom:12px">
+        + 上传图片 / GIF / 视频
+      </div>
+
+      <div class="row">
+        <span class="row-label">其他素材</span>
+        <span class="badge badge-optional">可选</span>
+      </div>
+      <div class="row">
+        <span class="row-label">玩耍动画</span>
+        <div id="upload-interact.play" class="upload-area" data-key="interact.play" style="flex:1">+ 上传</div>
+      </div>
+      <div class="row">
+        <span class="row-label">喂食动画</span>
+        <div id="upload-interact.feed" class="upload-area" data-key="interact.feed" style="flex:1">+ 上传</div>
+      </div>
+      <div class="row">
+        <span class="row-label">摸头动画</span>
+        <div id="upload-interact.pet" class="upload-area" data-key="interact.pet" style="flex:1">+ 上传</div>
+      </div>
+      <div class="row">
+        <span class="row-label">叫声</span>
+        <div id="upload-sound" class="upload-area" data-key="sound" style="flex:1">+ 上传 MP3 / WAV</div>
+      </div>
+    </div>
+
+    <!-- Claude Code -->
+    <div class="section">
+      <div class="section-label">Claude Code</div>
+      <div id="hook-status" class="hook-status not-installed">
+        <span id="hook-label">未安装</span>
+        <button id="hook-btn">安装</button>
+      </div>
+    </div>
+
+    <!-- 休息提醒 -->
+    <div class="section">
+      <div class="section-label">休息提醒</div>
+      <div class="field">
+        <label>开启提醒</label>
+        <input type="checkbox" id="breakEnabled">
+      </div>
+      <div class="field">
+        <label>提醒间隔</label>
+        <div class="reminder-row">
+          <span>每</span>
+          <input type="number" id="breakInterval" min="1" max="480" value="45">
+          <span>分钟</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="file-input" style="display:none" accept="image/*,video/mp4,.gif,.mp3,.wav">
+  <script src="settings.js"></script>
+</body>
+</html>
