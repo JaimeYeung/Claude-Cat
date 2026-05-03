@@ -12,6 +12,8 @@ const DEFAULTS = {
   petX: 100,
   petY: 100,
   catSize: 120,
+  alertMessage: 'Claude 需要你了喵~',
+  reminderMessage: '休息一下喝点水~',
 };
 
 class Config {

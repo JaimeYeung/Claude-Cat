@@ -115,13 +115,13 @@ function triggerAlert() {
 
   window.catAPI.onAlert(() => {
     triggerAlert();
-    showBubble('alert', config.userName);
+    showBubble(`${config.userName}，${config.alertMessage}`);
     playAlertSound();
   });
 
   window.catAPI.onReminder(() => {
     triggerAlert();
-    showBubble('reminder', config.userName);
+    showBubble(`${config.userName}，${config.reminderMessage}`);
   });
 
   window.catAPI.onReload(() => {

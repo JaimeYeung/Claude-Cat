@@ -5,6 +5,8 @@ async function init() {
 
   document.getElementById('catName').value = config.catName || '';
   document.getElementById('userName').value = config.userName || '';
+  document.getElementById('alertMessage').value = config.alertMessage || '';
+  document.getElementById('reminderMessage').value = config.reminderMessage || '';
   document.getElementById('breakEnabled').checked = config.breakEnabled;
   document.getElementById('breakInterval').value = config.breakInterval;
   const sz = config.catSize || 120;
@@ -20,6 +22,8 @@ function bindEvents() {
   document.getElementById('save-btn').addEventListener('click', () => {
     window.settingsAPI.setConfig('catName', document.getElementById('catName').value);
     window.settingsAPI.setConfig('userName', document.getElementById('userName').value);
+    window.settingsAPI.setConfig('alertMessage', document.getElementById('alertMessage').value);
+    window.settingsAPI.setConfig('reminderMessage', document.getElementById('reminderMessage').value);
     const btn = document.getElementById('save-btn');
     btn.textContent = '已保存 ✓';
     btn.disabled = true;
