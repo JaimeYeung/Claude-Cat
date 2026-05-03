@@ -1,24 +1,28 @@
 # Claude Cat 🐱
 
-A macOS desktop companion that watches Claude Code so you don't have to.
+> A desktop cat that keeps you company while you work — and yells at you when Claude Code needs a click.
 
-## The Problem
+---
 
-You kick off a task in Claude Code, switch to another window, and come back 30 minutes later — only to find Claude has been sitting there waiting for your click the entire time. Nothing got done. Again.
+Remember QQ Pet? That little creature that lived on your screen, ate virtual food, and made your desktop feel less lonely?
 
-Claude Cat sits on your desktop and jumps to get your attention the moment Claude Code needs you. No more wasted sessions.
+Claude Cat is that. But for 2025. And actually useful.
+
+It sits in the corner of your screen all day. Sometimes it does a little animation. You almost forget it's there — until Claude Code gets stuck waiting for your input, and your cat **jumps off the screen to get your attention**.
+
+No more coming back 30 minutes later to find Claude has been frozen on a permission prompt the whole time. Nothing written. Session wasted.
+
+---
 
 ## What It Does
 
-- **Instant alerts** — when Claude Code needs your input, your cat jumps and shows a notification bubble
-- **Break reminders** — configurable reminders to step away and drink some water
-- **Always on top** — lives on your desktop, visible no matter what app you're in
-- **Draggable** — move the cat anywhere on screen
-- **Fully customizable** — upload your own cat GIF/video, set names, adjust size, write your own alert messages
+**Companion** — a small cat lives on your desktop while you work. Drag it anywhere. Hover to interact (play, feed, pet). Upload your own cat GIF or video to make it yours.
 
-## Demo
+**Watchdog** — hooks into Claude Code's notification system. The moment Claude needs your input, your cat jumps and shows an alert bubble with your name on it.
 
-![Claude Cat demo](assets/placeholder.png)
+**Break reminder** — been staring at the screen for 45 minutes? Your cat will let you know.
+
+---
 
 ## Getting Started
 
@@ -39,63 +43,54 @@ npm start
 
 ### Setup
 
-1. **Right-click the cat** → Settings
-2. Upload your main cat animation (GIF, PNG, or MP4) under **Assets → Main animation**
-3. Under **Claude Code**, click **Install** to wire up the notification hook
-4. That's it — Claude Cat will now jump whenever Claude Code needs your attention
+1. Right-click the cat → **Settings**
+2. Upload a cat animation under **Assets → Main animation** (GIF, PNG, or MP4)
+3. Under **Claude Code**, click **Install** to connect the notification hook
+4. Done — your cat is now watching Claude Code for you
 
-## How It Works
+---
 
-Claude Cat installs a [Claude Code Notification hook](https://docs.anthropic.com/en/docs/claude-code/hooks) that fires a `curl` request to a local HTTP server whenever Claude Code needs user input. The Electron app receives this signal and triggers the cat animation + alert bubble.
+## Customization
 
-The hook added to `~/.claude/settings.json` looks like this:
+Make it feel like yours:
+
+- **Your cat's name** and **what it calls you** — shown in every alert bubble
+- **Custom alert messages** — write whatever you want your cat to say
+- **Cat size** — 80px to 240px, drag the slider
+- **Optional animations** for play / feed / pet interactions
+- **Sound** — upload an MP3/WAV to play on alerts
+- **Language** — English / 中文
+
+---
+
+## How the Hook Works
+
+Claude Cat installs a [Claude Code Notification hook](https://docs.anthropic.com/en/docs/claude-code/hooks) into `~/.claude/settings.json`. When Claude Code needs your attention, it fires a `curl` to a local server running inside the app, which triggers the cat animation.
+
+The hook is automatically removed when you quit.
 
 ```json
 {
   "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "curl -s http://localhost:7777/cat-gatekeeper || true"
-          }
-        ]
-      }
-    ]
+    "Notification": [{
+      "hooks": [{
+        "type": "command",
+        "command": "curl -s http://localhost:7777/cat-gatekeeper || true"
+      }]
+    }]
   }
 }
 ```
 
-The hook is automatically removed when you quit the app.
+---
 
-## Settings
-
-| Setting | Description |
-|---|---|
-| Cat name | What you call your cat |
-| Your name | How the cat addresses you in alerts |
-| Alert message | Text shown when Claude needs you |
-| Break message | Text shown for break reminders |
-| Cat size | 80px – 240px |
-| Main animation | Required: GIF, PNG, or MP4 |
-| Interaction animations | Optional: play / feed / pet |
-| Sound | Optional: MP3 or WAV played on alert |
-| Break reminder interval | How often to remind you to take a break |
-| Language | English / 中文 |
-
-## Building a DMG
+## Build a DMG
 
 ```bash
 npm run build
+# → dist/Cat Gatekeeper-1.0.0.dmg
 ```
 
-Output: `dist/Cat Gatekeeper-1.0.0.dmg`
+---
 
-## Disclaimer
-
-Claude Cat is an independent open-source project and is not affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic.
-
-## License
-
-MIT
+*Claude Cat is an independent open-source project, not affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic.*
