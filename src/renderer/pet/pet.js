@@ -106,6 +106,25 @@ function triggerAlert() {
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
+let repeatAlertTimer = null;
+
+function scheduleRepeatAlert() {
+  clearTimeout(repeatAlertTimer);
+  repeatAlertTimer = setTimeout(() => {
+    const bubble = document.getElementById('bubble');
+    if (!bubble.classList.contains('hidden')) {
+      triggerAlert();
+      playAlertSound();
+      scheduleRepeatAlert();
+    }
+  }, 3 * 60 * 1000);
+}
+
+function clearRepeatAlert() {
+  clearTimeout(repeatAlertTimer);
+  repeatAlertTimer = null;
+}
+
 function applyPetLanguage(lang) {
   document.querySelectorAll('#interaction-btns button').forEach(btn => {
     btn.textContent = btn.dataset[lang] || btn.textContent;
@@ -124,6 +143,7 @@ function applyPetLanguage(lang) {
     triggerAlert();
     showBubble(`${config.userName}，${config.alertMessage}`);
     playAlertSound();
+    scheduleRepeatAlert();
   });
 
   window.catAPI.onReminder(() => {
@@ -191,6 +211,7 @@ document.addEventListener('mouseup', async (e) => {
 catWrap.addEventListener('mouseenter', () => {
   interactionBtns.classList.remove('hidden');
   hideBubble();
+  clearRepeatAlert();
 });
 
 catWrap.addEventListener('mouseleave', () => {
