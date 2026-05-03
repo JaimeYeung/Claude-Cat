@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: transparent;
+      overflow: hidden;
+      user-select: none;
+    }
+    #pet-root {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 8px;
+    }
+    #cat-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      cursor: grab;
+    }
+    #cat-wrap:active { cursor: grabbing; }
+    #cat-display {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #cat-display img,
+    #cat-display video {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+    #bubble {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 14px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: white;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+    }
+    #bubble::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.25);
+    }
+    #bubble.hidden { display: none; }
+    #interaction-btns {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    #interaction-btns.hidden { display: none; }
+    #interaction-btns button {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      color: white;
+      font-size: 11px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    #interaction-btns button:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+    #particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+    @keyframes cat-jump {
+      0%   { transform: translateY(0); }
+      20%  { transform: translateY(-24px); }
+      40%  { transform: translateY(0); }
+      60%  { transform: translateY(-12px); }
+      80%  { transform: translateY(0); }
+      100% { transform: translateY(0); }
+    }
+    .jumping { animation: cat-jump 0.7s ease-in-out; }
+  </style>
+</head>
+<body>
+  <div id="pet-root">
+    <div id="cat-wrap">
+      <div id="cat-display">
+        <img id="cat-placeholder" src="../../assets/placeholder.png" alt="cat">
+      </div>
+      <div id="bubble" class="hidden"></div>
+      <div id="interaction-btns" class="hidden">
+        <button data-action="play">玩耍</button>
+        <button data-action="feed">喂食</button>
+        <button data-action="pet">摸头</button>
+      </div>
+      <div id="particles"></div>
+    </div>
+  </div>
+  <script src="pet.js"></script>
+  <script src="bubble.js"></script>
+  <script src="particles.js"></script>
+</body>
+</html>
