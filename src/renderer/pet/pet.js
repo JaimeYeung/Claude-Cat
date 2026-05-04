@@ -175,7 +175,12 @@ async function playAlertSound() {
 
 document.addEventListener('mousemove', (e) => {
   const el = document.elementFromPoint(e.clientX, e.clientY);
-  window.catAPI.setIgnoreMouseEvents(!el?.closest('#cat-wrap'));
+  const overCat = !!el?.closest('#cat-wrap');
+  const r = interactionBtns.getBoundingClientRect();
+  const overBtns = !interactionBtns.classList.contains('hidden') &&
+    e.clientX >= r.left && e.clientX <= r.right &&
+    e.clientY >= r.top  && e.clientY <= r.bottom;
+  window.catAPI.setIgnoreMouseEvents(!overCat && !overBtns);
 });
 
 // ─── Dragging ──────────────────────────────────────────────────────────────────
@@ -208,14 +213,22 @@ document.addEventListener('mouseup', async (e) => {
 
 // ─── Hover + interactions ──────────────────────────────────────────────────────
 
+let hideButtonsTimer = null;
+
 catWrap.addEventListener('mouseenter', () => {
+  clearTimeout(hideButtonsTimer);
   interactionBtns.classList.remove('hidden');
   hideBubble();
   clearRepeatAlert();
 });
 
 catWrap.addEventListener('mouseleave', () => {
-  interactionBtns.classList.add('hidden');
+  hideButtonsTimer = setTimeout(() => interactionBtns.classList.add('hidden'), 300);
+});
+
+interactionBtns.addEventListener('mouseenter', () => clearTimeout(hideButtonsTimer));
+interactionBtns.addEventListener('mouseleave', () => {
+  hideButtonsTimer = setTimeout(() => interactionBtns.classList.add('hidden'), 100);
 });
 
 interactionBtns.addEventListener('click', (e) => {
