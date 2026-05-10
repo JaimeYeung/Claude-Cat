@@ -12,18 +12,18 @@ async function loadConfig() {
 
 async function getAssetUrl(key) {
   const p = await window.catAPI.getAssetPath(key);
-  return p ? `file://${p}` : null;
+  return p ? `file://${p}?t=${Date.now()}` : null;
 }
 
 function renderMedia(url, loop = true) {
-  const ext = url ? url.split('.').pop().toLowerCase() : '';
+  const ext = url ? url.split('?')[0].split('.').pop().toLowerCase() : '';
   catDisplay.innerHTML = '';
 
   if (!url) {
     return;
   }
 
-  if (ext === 'mp4') {
+  if (ext === 'mp4' || ext === 'mov' || ext === 'webm') {
     const video = document.createElement('video');
     video.src = url;
     video.autoplay = true;
@@ -139,16 +139,18 @@ function applyPetLanguage(lang) {
   applyPetLanguage(config.language || 'zh');
   await enterMain();
 
-  window.catAPI.onAlert(() => {
+  window.catAPI.onAlert(async () => {
+    config = await window.catAPI.getConfig();
     triggerAlert();
-    showBubble(`${config.userName}，${config.alertMessage}`);
+    showBubble(`${config.userName}, ${config.alertMessage}`);
     playAlertSound();
     scheduleRepeatAlert();
   });
 
-  window.catAPI.onReminder(() => {
+  window.catAPI.onReminder(async () => {
+    config = await window.catAPI.getConfig();
     triggerAlert();
-    showBubble(`${config.userName}，${config.reminderMessage}`);
+    showBubble(`${config.userName}, ${config.reminderMessage}`);
   });
 
   window.catAPI.onReload(() => {

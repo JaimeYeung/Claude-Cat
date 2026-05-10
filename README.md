@@ -2,6 +2,10 @@
 
 > A desktop cat that keeps you company while you work — and jumps to get your attention when Claude Code needs a click.
 
+![Claude Cat alert bubble](screenshots/screenshot-2.png)
+
+![Claude Cat in VS Code](screenshots/screenshot-1.png)
+
 ---
 
 You miss having a pet around while you work. Something alive in the corner of your screen. A little presence that makes the day feel less like staring into a void.
@@ -56,7 +60,7 @@ Make it feel like yours:
 
 - **Your cat's name** and **what it calls you** — shown in every alert bubble
 - **Custom alert messages** — write whatever you want your cat to say
-- **Cat size** — 80px to 240px, drag the slider
+- **Cat size** — 80px to 400px, drag the slider
 - **Optional animations** for play / feed / pet interactions
 - **Sound** — upload an MP3/WAV to play on alerts
 - **Language** — English / 中文

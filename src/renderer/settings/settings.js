@@ -18,6 +18,7 @@ const I18N = {
     upload_main: '+ 上传图片 / GIF / 视频',
     upload_other: '+ 上传', upload_sound: '+ 上传 MP3 / WAV',
     upload_fail: '上传失败，请重试',
+    converting: '正在转换 MOV…',
     sec_break: '休息提醒', break_enabled: '开启提醒',
     break_interval: '提醒间隔', break_pre: '每', break_post: '分钟',
     hook_installed: 'Hook 已安装 ✓', hook_not_installed: '未安装',
@@ -40,6 +41,7 @@ const I18N = {
     upload_main: '+ Upload image / GIF / video',
     upload_other: '+ Upload', upload_sound: '+ Upload MP3 / WAV',
     upload_fail: 'Upload failed, please retry',
+    converting: 'Converting MOV…',
     sec_break: 'Break Reminder', break_enabled: 'Enable reminders',
     break_interval: 'Interval', break_pre: 'Every', break_post: 'minutes',
     hook_installed: 'Hook installed ✓', hook_not_installed: 'Not installed',
@@ -126,7 +128,7 @@ function bindEvents() {
       const key = area.dataset.key;
       const filters = key === 'sound'
         ? [{ name: 'Audio', extensions: ['mp3', 'wav'] }]
-        : [{ name: 'Media', extensions: ['png', 'gif', 'jpg', 'jpeg', 'mp4'] }];
+        : [{ name: 'Media', extensions: ['png', 'gif', 'jpg', 'jpeg', 'mp4', 'mov', 'webm'] }];
       const filePath = await window.settingsAPI.openFileDialog(filters);
       if (!filePath) return;
       await uploadWithProgress(key, area, filePath);
@@ -197,21 +199,29 @@ async function refreshAsset(key) {
 }
 
 async function uploadWithProgress(key, area, filePath) {
+  const isMov = filePath.toLowerCase().endsWith('.mov');
   let pct = 0;
-  renderProgress(area, pct);
-  const timer = setInterval(() => {
+
+  if (isMov) {
+    area.className = 'upload-area uploading';
+    area.innerHTML = `<span>${t('converting')}</span>`;
+  } else {
+    renderProgress(area, pct);
+  }
+
+  const timer = isMov ? null : setInterval(() => {
     pct = Math.min(90, pct + 15);
     renderProgress(area, pct);
   }, 80);
 
   try {
     await window.settingsAPI.uploadAsset(key, filePath);
-    clearInterval(timer);
-    renderProgress(area, 100);
+    if (timer) clearInterval(timer);
+    if (!isMov) renderProgress(area, 100);
     await new Promise(r => setTimeout(r, 350));
     await refreshAsset(key);
   } catch (err) {
-    clearInterval(timer);
+    if (timer) clearInterval(timer);
     area.className = 'upload-area upload-error';
     area.textContent = t('upload_fail');
     console.error('Upload failed:', err);

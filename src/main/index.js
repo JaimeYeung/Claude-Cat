@@ -98,11 +98,18 @@ function registerIPC() {
     if (key === 'language' && petWindow && !petWindow.isDestroyed()) {
       petWindow.webContents.send('cat:language', value);
     }
+    if (key === 'breakEnabled' || key === 'breakInterval') {
+      if (config.get('breakEnabled')) {
+        reminder.start(config.get('breakInterval'));
+      } else {
+        reminder.stop();
+      }
+    }
   });
   ipcMain.handle('config:get-all', () => config.getAll());
 
-  ipcMain.handle('assets:upload', (_, key, filePath) => {
-    const result = assets.save(key, filePath);
+  ipcMain.handle('assets:upload', async (_, key, filePath) => {
+    const result = await assets.save(key, filePath);
     if (petWindow && !petWindow.isDestroyed()) {
       petWindow.webContents.send('cat:reload');
     }
